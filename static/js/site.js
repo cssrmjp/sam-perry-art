@@ -242,9 +242,12 @@
     });
   }
 
-  /* 5. Contact Form & ?piece= Prefill */
+  /* 5. Contact Form & mailto: Composer */
   const contactForm = document.getElementById('contact-form');
+  const nameInput = document.getElementById('contact-name');
+  const emailInput = document.getElementById('contact-email');
   const subjectInput = document.getElementById('contact-subject');
+  const messageInput = document.getElementById('contact-message');
   const confirmationEl = document.getElementById('contact-confirmation');
 
   if (subjectInput) {
@@ -255,11 +258,32 @@
     }
   }
 
-  if (contactForm && confirmationEl) {
+  if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      contactForm.hidden = true;
-      confirmationEl.hidden = false;
+      const recipient = contactForm.dataset.recipient || 'sam.perry.artist@gmail.com';
+      const name = nameInput ? nameInput.value.trim() : '';
+      const senderEmail = emailInput ? emailInput.value.trim() : '';
+      const subject = subjectInput && subjectInput.value.trim()
+        ? subjectInput.value.trim()
+        : 'Studio Enquiry';
+      const msg = messageInput ? messageInput.value.trim() : '';
+
+      const bodyText = `From: ${name} (${senderEmail})\n\nMessage:\n${msg}`;
+      const mailtoURL = `mailto:${encodeURIComponent(recipient)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+
+      // Trigger the native email client
+      window.location.href = mailtoURL;
+
+      // Show on-page confirmation and update fallback link
+      if (confirmationEl) {
+        contactForm.hidden = true;
+        confirmationEl.hidden = false;
+        const directLink = document.getElementById('contact-direct-link');
+        if (directLink) {
+          directLink.href = mailtoURL;
+        }
+      }
     });
   }
 })();

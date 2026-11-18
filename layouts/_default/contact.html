@@ -32,7 +32,7 @@
     </div>
 
     <div>
-      <form id="contact-form" class="contact-form">
+      <form id="contact-form" class="contact-form" data-recipient="{{ .Site.Params.contactEmail }}">
         <div class="form-field">
           <label class="form-label" for="contact-name">Name</label>
           <input class="form-input" id="contact-name" name="name" type="text" required>
@@ -58,7 +58,8 @@
         </div>
       </form>
       <div id="contact-confirmation" class="form-confirmation" hidden>
-        Thank you. Your enquiry has been noted. Connect a form endpoint (such as Formspree or Web3Forms) to route submissions directly to your studio inbox.
+        <p style="margin: 0 0 0.5rem;">Opening your email app to send this enquiry to <strong>{{ .Site.Params.contactEmail }}</strong>...</p>
+        <p style="margin: 0; font-size: var(--text-xs); color: var(--color-muted);">If your email app did not open automatically, <a id="contact-direct-link" class="btn-text-link" href="mailto:{{ .Site.Params.contactEmail }}">click here to send directly</a>.</p>
       </div>
     </div>
   </div>

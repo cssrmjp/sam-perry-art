@@ -9,6 +9,7 @@ disableKinds = ['taxonomy', 'term']
   studioLocation = 'Wessex Studios, Wiltshire'
   instagramURL = 'https://www.instagram.com/sam.perry.art/'
   instagramHandle = '@sam.perry.art'
+  contactEmail = 'sam.perry.artist@gmail.com'
 
 [caches]
   [caches.images]
