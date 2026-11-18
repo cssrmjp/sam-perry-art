@@ -1,0 +1,33 @@
+{{ define "main" }}
+{{- $keystone := where (where .Site.RegularPages "Section" "works") ".Params.featured" true -}}
+<section aria-label="Curated Keystone Works">
+  <header class="landing-intro">
+    <div>
+      <h1 class="page-title">Selected Works</h1>
+      <p class="landing-statement">
+        A curated overview of wood-construction sculptures, nocturnal oil studies, and architectural sketches—bringing together recent available pieces and landmark installations.
+      </p>
+    </div>
+    <a href="{{ "works/" | relURL }}" class="btn-primary">View Full Catalogue &rarr;</a>
+  </header>
+
+  <div class="works-grid">
+    {{ range $keystone.ByDate.Reverse }}
+      {{ partial "work-card.html" . }}
+    {{ end }}
+  </div>
+
+  <aside class="landing-cta-band" aria-label="Explore Catalogue and Archive">
+    <div>
+      <h2 class="landing-cta-heading">Explore Works Available for Acquisition</h2>
+      <p class="archive-callout-text">
+        Browse all current Sculpture, Oils, and Sketches in the catalogue, or view prior installations in the archive.
+      </p>
+    </div>
+    <div class="landing-cta-actions">
+      <a href="{{ "works/" | relURL }}" class="btn-primary">View Full Catalogue &rarr;</a>
+      <a href="{{ "archive/" | relURL }}" class="archive-callout-link">Studio Archive &rarr;</a>
+    </div>
+  </aside>
+</section>
+{{ end }}

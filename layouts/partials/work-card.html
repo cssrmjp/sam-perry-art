@@ -1,0 +1,21 @@
+{{- $isAvailable := and (not .Params.archived) (eq .Params.status "Available") (isset .Params "price") (gt (.Params.price | int) 0) -}}
+<article class="work-card" data-category="{{ .Params.category }}" data-status="{{ .Params.status }}">
+  <a href="{{ .RelPermalink }}" class="work-card-trigger" aria-label="View {{ .Title }}">
+    <div class="work-media" style="aspect-ratio: {{ with .Params.aspect }}{{ . }}{{ else }}3 / 4{{ end }};">
+      {{ with .Params.main_image }}
+        <img src="{{ . | relURL }}" alt="{{ $.Title }}" loading="lazy">
+      {{ end }}
+    </div>
+    <div class="work-meta">
+      <div class="work-title-row">
+        <h2 class="work-title">{{ .Title }}</h2>
+        {{ if $isAvailable }}
+          <span class="work-status">&pound;{{ lang.FormatNumber 0 .Params.price }}</span>
+        {{ else }}
+          <span class="work-status is-muted">{{ .Params.status }}</span>
+        {{ end }}
+      </div>
+      <div class="work-details">{{ .Params.category }}{{ with .Params.dimensions }} &middot; {{ . }}{{ end }}</div>
+    </div>
+  </a>
+</article>

@@ -1,0 +1,196 @@
+media:
+  - name: works_media
+    label: Artwork Images
+    input: static/images/works
+    output: images/works
+    extensions: [jpg, jpeg, png, webp]
+
+content:
+  - name: works
+    label: Artworks (Catalogue & Archive)
+    type: collection
+    path: content/works
+    exclude:
+      - _index.md
+    format: yaml-frontmatter
+    media: works_media
+    view:
+      fields: [title, category, status, price, featured, archived]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: date
+        label: Date
+        type: date
+      - name: category
+        label: Category
+        type: select
+        default: Sculpture
+        options:
+          values: [Sculpture, Oils, Sketches]
+      - name: medium
+        label: Medium & Materials
+        type: string
+        description: "e.g. Scorched English oak construction, 23ct gold leaf"
+      - name: dimensions
+        label: Dimensions
+        type: string
+        description: "Metric dimensions in cm, e.g. 64 × 22 × 18 cm"
+      - name: price
+        label: Price (GBP £)
+        type: number
+        description: "Price in GBP (leave blank if POA, Sold, or Archive)"
+      - name: status
+        label: Availability Status
+        type: select
+        default: Available
+        options:
+          values:
+            - Available
+            - Reserved
+            - Sold
+            - Exhibition Archive
+            - Private Collection
+            - Not for Sale
+            - Studio Archive
+      - name: payment_link
+        label: Payment Link URL
+        type: string
+        description: "Optional Stripe or Square Payment Link URL"
+      - name: featured
+        label: Feature on Landing Page (Keystone Work)
+        type: boolean
+        default: true
+      - name: archived
+        label: Move to Studio Archive (Not for Sale)
+        type: boolean
+        default: false
+      - name: aspect
+        label: Grid Aspect Ratio
+        type: select
+        default: "3 / 4"
+        options:
+          values: ["3 / 4", "4 / 3", "1 / 1", "4 / 5", "5 / 4"]
+      - name: main_image
+        label: Primary Image
+        type: image
+        required: true
+      - name: gallery_images
+        label: Additional Gallery Images
+        type: image
+        list: true
+        description: "Optional detail, rear, or installation photographs"
+      - name: body
+        label: Curatorial Notes
+        type: rich-text
+
+  - name: exhibitions
+    label: Exhibitions & CV
+    type: file
+    path: content/exhibitions.md
+    format: yaml-frontmatter
+    fields:
+      - name: title
+        label: Page Title
+        type: string
+        required: true
+      - name: subtitle
+        label: Subtitle
+        type: string
+      - name: exhibitions
+        label: Selected Exhibitions & Installations
+        type: object
+        list: true
+        fields:
+          - name: year
+            label: Year
+            type: string
+            required: true
+          - name: title
+            label: Exhibition Title
+            type: string
+            required: true
+          - name: venue
+            label: Venue & Location
+            type: string
+            required: true
+      - name: disciplines
+        label: Practice & Disciplines
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Discipline
+            type: string
+            required: true
+          - name: description
+            label: Description
+            type: string
+            required: true
+
+  - name: about
+    label: About Page
+    type: file
+    path: content/about.md
+    format: yaml-frontmatter
+    media: works_media
+    fields:
+      - name: title
+        label: Page Title
+        type: string
+        required: true
+      - name: subtitle
+        label: Subtitle
+        type: string
+      - name: portrait
+        label: Artist Portrait Path
+        type: string
+        default: "images/sam-perry-portrait.jpg"
+      - name: studio_heading
+        label: Studio Heading
+        type: string
+      - name: studio_address
+        label: Studio Address
+        type: text
+      - name: highlight_heading
+        label: Highlight Heading
+        type: string
+      - name: highlight_text
+        label: Highlight Text
+        type: text
+      - name: body
+        label: Artist Statement & Biography
+        type: rich-text
+
+  - name: contact
+    label: Contact Page
+    type: file
+    path: content/contact.md
+    format: yaml-frontmatter
+    fields:
+      - name: title
+        label: Page Title
+        type: string
+        required: true
+      - name: subtitle
+        label: Subtitle
+        type: string
+      - name: studio_heading
+        label: Studio Heading
+        type: string
+      - name: studio_details
+        label: Studio Contact Details
+        type: text
+      - name: viewing_heading
+        label: Viewing Room Heading
+        type: string
+      - name: viewing_text
+        label: Viewing Room & Commissions Note
+        type: text

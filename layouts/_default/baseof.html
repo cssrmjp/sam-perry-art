@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  <div class="site-shell">
+    {{ partial "header.html" . }}
+
+    <main id="app-main" class="site-main" role="main">
+      {{ block "main" . }}{{ end }}
+    </main>
+
+    {{ partial "footer.html" . }}
+  </div>
+
+  <!-- Lightbox Overlay -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Artwork enlarged view" hidden>
+    <div class="lightbox-header">
+      <div class="lightbox-caption-wrap">
+        <span id="lightbox-title" class="lightbox-title"></span>
+        <span id="lightbox-angle" class="lightbox-angle"></span>
+      </div>
+      <button id="lightbox-close" class="lightbox-close" type="button" aria-label="Close enlarged view">Close</button>
+    </div>
+    <div class="lightbox-stage">
+      <button id="lightbox-prev" class="lightbox-nav lightbox-prev" type="button" aria-label="Previous view">&larr;</button>
+      <div id="lightbox-media" class="lightbox-media"></div>
+      <button id="lightbox-next" class="lightbox-nav lightbox-next" type="button" aria-label="Next view">&rarr;</button>
+    </div>
+  </div>
+
+  <!-- Acquisition Modal -->
+  <div id="checkout-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-heading" hidden>
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-panel">
+      <div class="modal-header">
+        <p class="modal-eyebrow">Viewing Room Acquisition</p>
+        <button class="modal-close" type="button" data-close-modal aria-label="Close acquisition dialog">Close</button>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="{{ "js/site.js" | relURL }}"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <p class="footer-note">&copy; {{ now.Year }} Sam Perry &middot; {{ .Site.Params.studioLocation }}.</p>
+    <div class="footer-links">
+      <a href="{{ "archive/" | relURL }}" class="footer-link">Studio Archive</a>
+      <span class="footer-sep" aria-hidden="true">/</span>
+      <a href="{{ "contact/" | relURL }}" class="footer-link">Studio Enquiries</a>
+      <span class="footer-sep" aria-hidden="true">/</span>
+      <a href="{{ "exhibitions/" | relURL }}" class="footer-link">Curriculum Vitae</a>
+      <span class="footer-sep" aria-hidden="true">/</span>
+      <a href="{{ .Site.Params.instagramURL }}" class="footer-link" target="_blank" rel="noopener noreferrer">Instagram</a>
+    </div>
+  </div>
+</footer>

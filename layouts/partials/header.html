@@ -1,0 +1,29 @@
+<header class="site-header" role="banner">
+  <div class="header-inner">
+    <a href="{{ "" | relURL }}" class="artist-name">{{ .Site.Params.artistName }}</a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation">
+      <span class="nav-toggle-label">Menu</span>
+    </button>
+
+    <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+      <ul class="nav-list">
+        <li>
+          <a href="{{ "works/" | relURL }}" class="nav-link{{ if or (eq .Section "works") (eq .RelPermalink ("works/" | relURL)) }} is-active{{ end }}">Catalogue</a>
+        </li>
+        <li>
+          <a href="{{ "archive/" | relURL }}" class="nav-link{{ if eq .Layout "archive" }} is-active{{ end }}">Archive</a>
+        </li>
+        <li>
+          <a href="{{ "exhibitions/" | relURL }}" class="nav-link{{ if eq .Layout "exhibitions" }} is-active{{ end }}">Exhibitions &amp; CV</a>
+        </li>
+        <li>
+          <a href="{{ "about/" | relURL }}" class="nav-link{{ if eq .Layout "about" }} is-active{{ end }}">About</a>
+        </li>
+        <li>
+          <a href="{{ "contact/" | relURL }}" class="nav-link{{ if eq .Layout "contact" }} is-active{{ end }}">Contact</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

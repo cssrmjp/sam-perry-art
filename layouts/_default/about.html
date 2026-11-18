@@ -1,0 +1,39 @@
+{{ define "main" }}
+<section class="editorial-page" aria-label="About Sam Perry">
+  <header class="editorial-header">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ with .Params.subtitle }}
+      <p class="editorial-subtitle">{{ . }}</p>
+    {{ end }}
+  </header>
+
+  <div class="about-grid">
+    <div class="about-prose">
+      {{ .Content }}
+    </div>
+
+    <aside class="about-aside">
+      {{ with .Params.portrait }}
+        <div class="about-portrait">
+          <img src="{{ . | relURL }}" alt="Sam Perry">
+        </div>
+      {{ end }}
+
+      {{ with .Params.studio_address }}
+        <h2 class="aside-label">{{ $.Params.studio_heading | default "Studio" }}</h2>
+        <p class="aside-text">{{ . | replaceRE "\n" "<br>" | safeHTML }}</p>
+      {{ end }}
+
+      {{ with .Params.highlight_text }}
+        <h2 class="aside-label">{{ $.Params.highlight_heading | default "Selected Highlight" }}</h2>
+        <p class="aside-text">{{ . }}</p>
+      {{ end }}
+
+      <h2 class="aside-label">Studio Archive</h2>
+      <p class="aside-text">
+        Earlier installations and works held in private collections are documented in the <a href="{{ "archive/" | relURL }}" class="archive-callout-link">Studio Archive</a>.
+      </p>
+    </aside>
+  </div>
+</section>
+{{ end }}

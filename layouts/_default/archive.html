@@ -1,0 +1,38 @@
+{{ define "main" }}
+{{- $archivedWorks := where (where .Site.RegularPages "Section" "works") ".Params.archived" true -}}
+<section aria-label="Studio Archive">
+  <header class="catalogue-header">
+    <div class="catalogue-heading-group">
+      <h1 class="page-title">{{ .Title }}</h1>
+      <span id="catalogue-count" class="catalogue-count">{{ len $archivedWorks }} Prior {{ if eq (len $archivedWorks) 1 }}Work{{ else }}Works{{ end }} &middot; Not for Sale</span>
+    </div>
+
+    <div class="filter-bar" role="region" aria-label="Filter archive">
+      <div class="filter-group" role="group" aria-label="Filter by discipline">
+        <button type="button" class="filter-btn is-active" data-filter-category="All">All</button>
+        <button type="button" class="filter-btn" data-filter-category="Sculpture">Sculpture</button>
+        <button type="button" class="filter-btn" data-filter-category="Oils">Oils</button>
+        <button type="button" class="filter-btn" data-filter-category="Sketches">Sketches</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="works-grid" data-filterable="true" data-archive="true">
+    {{ range $archivedWorks.ByDate.Reverse }}
+      {{ partial "work-card.html" . }}
+    {{ end }}
+  </div>
+
+  <div id="empty-state" class="empty-state" hidden>
+    <p>No archived works match the current selection.</p>
+    <button type="button" class="empty-state-btn" id="reset-filters-btn">Reset filters</button>
+  </div>
+
+  <aside class="catalogue-archive-callout" aria-label="Studio Journal on Instagram">
+    <p class="archive-callout-text">
+      For ongoing studio works, sketches, and process notes:
+    </p>
+    <a href="{{ .Site.Params.instagramURL }}" class="archive-callout-link" target="_blank" rel="noopener noreferrer">{{ .Site.Params.instagramHandle }} on Instagram &nearr;</a>
+  </aside>
+</section>
+{{ end }}

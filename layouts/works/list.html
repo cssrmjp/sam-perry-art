@@ -1,0 +1,43 @@
+{{ define "main" }}
+{{- $catalogueWorks := where .Pages ".Params.archived" "ne" true -}}
+<section aria-label="Catalogue">
+  <header class="catalogue-header">
+    <div class="catalogue-heading-group">
+      <h1 class="page-title">{{ .Title }}</h1>
+      <span id="catalogue-count" class="catalogue-count">{{ len $catalogueWorks }} {{ if eq (len $catalogueWorks) 1 }}Work{{ else }}Works{{ end }}</span>
+    </div>
+
+    <div class="filter-bar" role="region" aria-label="Filter works">
+      <div class="filter-group" role="group" aria-label="Filter by discipline">
+        <button type="button" class="filter-btn is-active" data-filter-category="All">All</button>
+        <button type="button" class="filter-btn" data-filter-category="Sculpture">Sculpture</button>
+        <button type="button" class="filter-btn" data-filter-category="Oils">Oils</button>
+        <button type="button" class="filter-btn" data-filter-category="Sketches">Sketches</button>
+      </div>
+      <span class="filter-divider" aria-hidden="true"></span>
+      <button type="button" class="availability-toggle" id="toggle-available" aria-pressed="false">
+        <span class="availability-indicator" aria-hidden="true"></span>
+        <span>Available Only</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="works-grid" data-filterable="true" data-archive="false">
+    {{ range $catalogueWorks.ByDate.Reverse }}
+      {{ partial "work-card.html" . }}
+    {{ end }}
+  </div>
+
+  <div id="empty-state" class="empty-state" hidden>
+    <p>No works match the current selection.</p>
+    <button type="button" class="empty-state-btn" id="reset-filters-btn">Reset filters</button>
+  </div>
+
+  <aside class="catalogue-archive-callout" aria-label="Studio Archive">
+    <p class="archive-callout-text">
+      Looking for earlier installations, past series, or works in private collections?
+    </p>
+    <a href="{{ "archive/" | relURL }}" class="archive-callout-link">View Studio Archive (Not for Sale) &rarr;</a>
+  </aside>
+</section>
+{{ end }}

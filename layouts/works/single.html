@@ -1,0 +1,103 @@
+{{ define "main" }}
+{{- $isAvailable := and (not .Params.archived) (eq .Params.status "Available") (isset .Params "price") (gt (.Params.price | int) 0) -}}
+{{- $priceFormatted := "" -}}
+{{- if $isAvailable -}}
+  {{- $priceFormatted = printf "£%s" (lang.FormatNumber 0 .Params.price) -}}
+{{- end -}}
+{{- $backURL := cond (eq .Params.archived true) ("archive/" | relURL) ("works/" | relURL) -}}
+{{- $backLabel := cond (eq .Params.archived true) "Back to Archive" "Back to Catalogue" -}}
+
+<article class="detail-page">
+  <a href="{{ $backURL }}" class="detail-back">&larr; {{ $backLabel }}</a>
+
+  <div class="detail-layout">
+    <div class="gallery-stage">
+      <div
+        class="gallery-primary-wrap"
+        id="open-lightbox-btn"
+        role="button"
+        tabindex="0"
+        data-title="{{ .Title }}"
+        aria-label="Open full-screen view of {{ .Title }}"
+      >
+        {{ with .Params.main_image }}
+          <img id="detail-primary-img" src="{{ . | relURL }}" alt="{{ $.Title }}">
+        {{ end }}
+        <span class="gallery-zoom-hint">Enlarge</span>
+      </div>
+
+      {{- $allViews := slice (dict "src" (.Params.main_image | relURL) "label" "Primary View") -}}
+      {{- range $idx, $img := .Params.gallery_images -}}
+        {{- $allViews = $allViews | append (dict "src" ($img | relURL) "label" (printf "Detail View %d" (add $idx 2))) -}}
+      {{- end -}}
+
+      {{ if gt (len $allViews) 1 }}
+        <div class="gallery-thumbs" role="group" aria-label="Additional views">
+          {{ range $idx, $view := $allViews }}
+            <button
+              type="button"
+              class="thumb-btn{{ if eq $idx 0 }} is-active{{ end }}"
+              data-src="{{ $view.src }}"
+              data-alt="{{ $.Title }} — {{ $view.label }}"
+              data-label="{{ $view.label }}"
+              aria-label="Show {{ $view.label }}"
+            >
+              <span class="thumb-frame">
+                <img src="{{ $view.src }}" alt="{{ $.Title }} — {{ $view.label }}">
+              </span>
+              <span class="thumb-label">{{ $view.label }}</span>
+            </button>
+          {{ end }}
+        </div>
+      {{ end }}
+    </div>
+
+    <div class="detail-info">
+      <h1 class="detail-title">{{ .Title }}</h1>
+      <p class="detail-year">{{ .Date.Format "2006" }} &middot; {{ .Params.category }}</p>
+
+      <dl class="detail-specs">
+        <div class="spec-row">
+          <dt class="spec-label">Medium</dt>
+          <dd class="spec-value">{{ .Params.medium }}</dd>
+        </div>
+        {{ with .Params.dimensions }}
+          <div class="spec-row">
+            <dt class="spec-label">Dimensions</dt>
+            <dd class="spec-value">{{ . }}</dd>
+          </div>
+        {{ end }}
+        <div class="spec-row">
+          <dt class="spec-label">Availability</dt>
+          <dd class="spec-value">{{ if $isAvailable }}{{ $priceFormatted }}{{ else }}{{ .Params.status }}{{ end }}</dd>
+        </div>
+      </dl>
+
+      <div class="detail-notes">
+        {{ .Content }}
+      </div>
+
+      {{ if not .Params.archived }}
+        {{ if eq .Params.status "Available" }}
+          <div class="detail-actions">
+            <button
+              type="button"
+              class="btn-primary"
+              id="acquire-work-btn"
+              data-title="{{ .Title }}"
+              data-meta="{{ .Date.Format "2006" }} &middot; {{ .Params.medium }}{{ with .Params.dimensions }} &middot; {{ . }}{{ end }}"
+              data-price="{{ $priceFormatted }}"
+              data-payment-link="{{ .Params.payment_link }}"
+            >Acquire Work</button>
+            <a href="{{ "contact/" | relURL }}?piece={{ printf "%s (%s)" .Title (.Date.Format "2006") | urlquery }}" class="btn-text-link">Enquire About This Piece</a>
+          </div>
+        {{ else if eq .Params.status "Reserved" }}
+          <div class="detail-actions">
+            <a href="{{ "contact/" | relURL }}?piece={{ printf "%s (%s)" .Title (.Date.Format "2006") | urlquery }}" class="btn-text-link">Enquire About This Piece</a>
+          </div>
+        {{ end }}
+      {{ end }}
+    </div>
+  </div>
+</article>
+{{ end }}

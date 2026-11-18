@@ -1,0 +1,38 @@
+{{ define "main" }}
+<section class="editorial-page" aria-label="Exhibitions and Curriculum Vitae">
+  <header class="editorial-header">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ with .Params.subtitle }}
+      <p class="editorial-subtitle">{{ . }}</p>
+    {{ end }}
+  </header>
+
+  {{ with .Params.exhibitions }}
+    <section class="cv-section">
+      <h2 class="section-heading">Selected Exhibitions &amp; Installations</h2>
+      <ul class="cv-list">
+        {{ range . }}
+          <li class="cv-item">
+            <span class="cv-year">{{ .year }}</span>
+            <span class="cv-entry"><strong>{{ .title }}</strong> <span class="cv-venue">&mdash; {{ .venue }}</span></span>
+          </li>
+        {{ end }}
+      </ul>
+    </section>
+  {{ end }}
+
+  {{ with .Params.disciplines }}
+    <section class="cv-section">
+      <h2 class="section-heading">Practice &amp; Disciplines</h2>
+      <ul class="cv-list">
+        {{ range . }}
+          <li class="cv-item">
+            <span class="cv-year">{{ .label }}</span>
+            <span class="cv-entry">{{ .description }}</span>
+          </li>
+        {{ end }}
+      </ul>
+    </section>
+  {{ end }}
+</section>
+{{ end }}
