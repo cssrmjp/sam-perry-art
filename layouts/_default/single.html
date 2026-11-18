@@ -1,0 +1,153 @@
+{{ define "main" }}
+{{- $name := .File.BaseFileName -}}
+{{- if or (eq $name "contact") (eq .Layout "contact") -}}
+<section class="editorial-page" aria-label="Contact">
+  <header class="editorial-header">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ with .Params.subtitle }}
+      <p class="editorial-subtitle">{{ . }}</p>
+    {{ end }}
+  </header>
+
+  <div class="contact-grid">
+    <div>
+      {{ with .Params.studio_details }}
+        <div class="contact-block">
+          <h2 class="aside-label">{{ $.Params.studio_heading | default "Studio" }}</h2>
+          <p class="aside-text">{{ . | replaceRE "\n" "<br>" | safeHTML }}</p>
+        </div>
+      {{ end }}
+
+      {{ with .Params.viewing_text }}
+        <div class="contact-block">
+          <h2 class="aside-label">{{ $.Params.viewing_heading | default "Viewing Room & Commissions" }}</h2>
+          <p class="aside-text">{{ . }}</p>
+        </div>
+      {{ end }}
+
+      <div class="contact-block">
+        <h2 class="aside-label">Instagram</h2>
+        <p class="aside-text">
+          <a href="{{ .Site.Params.instagramURL }}" class="archive-callout-link" target="_blank" rel="noopener noreferrer">{{ .Site.Params.instagramHandle }} &nearr;</a>
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <form id="contact-form" class="contact-form">
+        <div class="form-field">
+          <label class="form-label" for="contact-name">Name</label>
+          <input class="form-input" id="contact-name" name="name" type="text" required>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="contact-email">Email</label>
+          <input class="form-input" id="contact-email" name="email" type="email" required>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="contact-subject">Subject</label>
+          <input class="form-input" id="contact-subject" name="subject" type="text">
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="contact-message">Message</label>
+          <textarea class="form-textarea" id="contact-message" name="message" required></textarea>
+        </div>
+
+        <div>
+          <button type="submit" class="btn-primary">Send Enquiry</button>
+        </div>
+      </form>
+      <div id="contact-confirmation" class="form-confirmation" hidden>
+        Thank you. Your enquiry has been noted. Connect a form endpoint (such as Formspree or Web3Forms) to route submissions directly to your studio inbox.
+      </div>
+    </div>
+  </div>
+</section>
+{{- else if or (eq $name "about") (eq .Layout "about") -}}
+<section class="editorial-page" aria-label="About Sam Perry">
+  <header class="editorial-header">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ with .Params.subtitle }}
+      <p class="editorial-subtitle">{{ . }}</p>
+    {{ end }}
+  </header>
+
+  <div class="about-grid">
+    <div class="about-prose">
+      {{ .Content }}
+    </div>
+
+    <aside class="about-aside">
+      {{ with .Params.portrait }}
+        <div class="about-portrait">
+          <img src="{{ . | relURL }}" alt="Sam Perry">
+        </div>
+      {{ end }}
+
+      {{ with .Params.studio_address }}
+        <h2 class="aside-label">{{ $.Params.studio_heading | default "Studio" }}</h2>
+        <p class="aside-text">{{ . | replaceRE "\n" "<br>" | safeHTML }}</p>
+      {{ end }}
+
+      {{ with .Params.highlight_text }}
+        <h2 class="aside-label">{{ $.Params.highlight_heading | default "Selected Highlight" }}</h2>
+        <p class="aside-text">{{ . }}</p>
+      {{ end }}
+
+      <h2 class="aside-label">Studio Archive</h2>
+      <p class="aside-text">
+        Earlier installations and works held in private collections are documented in the <a href="{{ "archive/" | relURL }}" class="archive-callout-link">Studio Archive</a>.
+      </p>
+    </aside>
+  </div>
+</section>
+{{- else if or (eq $name "exhibitions") (eq .Layout "exhibitions") -}}
+<section class="editorial-page" aria-label="Exhibitions and Curriculum Vitae">
+  <header class="editorial-header">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ with .Params.subtitle }}
+      <p class="editorial-subtitle">{{ . }}</p>
+    {{ end }}
+  </header>
+
+  {{ with .Params.exhibitions }}
+    <section class="cv-section">
+      <h2 class="section-heading">Selected Exhibitions &amp; Installations</h2>
+      <ul class="cv-list">
+        {{ range . }}
+          <li class="cv-item">
+            <span class="cv-year">{{ .year }}</span>
+            <span class="cv-entry"><strong>{{ .title }}</strong> <span class="cv-venue">&mdash; {{ .venue }}</span></span>
+          </li>
+        {{ end }}
+      </ul>
+    </section>
+  {{ end }}
+
+  {{ with .Params.disciplines }}
+    <section class="cv-section">
+      <h2 class="section-heading">Practice &amp; Disciplines</h2>
+      <ul class="cv-list">
+        {{ range . }}
+          <li class="cv-item">
+            <span class="cv-year">{{ .label }}</span>
+            <span class="cv-entry">{{ .description }}</span>
+          </li>
+        {{ end }}
+      </ul>
+    </section>
+  {{ end }}
+</section>
+{{- else -}}
+<article class="editorial-page">
+  <header class="editorial-header">
+    <h1 class="page-title">{{ .Title }}</h1>
+  </header>
+  <div class="about-prose">
+    {{ .Content }}
+  </div>
+</article>
+{{- end -}}
+{{ end }}

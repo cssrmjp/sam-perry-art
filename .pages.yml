@@ -97,6 +97,11 @@ content:
     path: content/exhibitions.md
     format: yaml-frontmatter
     fields:
+      - name: layout
+        label: Layout
+        type: string
+        default: exhibitions
+        hidden: true
       - name: title
         label: Page Title
         type: string
@@ -142,6 +147,11 @@ content:
     format: yaml-frontmatter
     media: works_media
     fields:
+      - name: layout
+        label: Layout
+        type: string
+        default: about
+        hidden: true
       - name: title
         label: Page Title
         type: string
@@ -175,6 +185,11 @@ content:
     path: content/contact.md
     format: yaml-frontmatter
     fields:
+      - name: layout
+        label: Layout
+        type: string
+        default: contact
+        hidden: true
       - name: title
         label: Page Title
         type: string
