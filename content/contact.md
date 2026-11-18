@@ -5,8 +5,9 @@ subtitle: Studio viewing appointments, acquisition enquiries, and exhibition
 studio_heading: Wessex Studios
 studio_details: |
   c/o The Laurels, Kington Langley, Wiltshire
-  SN15 5NH, United Kingdom
-  +44 (0) 7947 724703
+  SN15 5NG, United Kingdom
+
+  email: sam.perry.artist@gmail.com
 viewing_heading: Viewing Room & Commissions
 viewing_text: Works may be viewed in person by appointment at Wessex Studios.
   Crating, UK delivery, and international shipping are arranged directly with
